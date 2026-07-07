@@ -1,19 +1,9 @@
-from backend.ingestion.pdf_loader import extract_text
-from backend.ingestion.chunker import chunk_text
-from backend.ingestion.embedder import embed_chunks
-from backend.retrieval.search import retrieve
-from backend.vector_db.qdrant_db import upload_chunks, fetch_chunks
+from backend.rag.pipeline import answer_question, index_document
 
-text = extract_text("data/sample.pdf")
-chunks = chunk_text(text)
-embeddings = embed_chunks(chunks)
+index_document("data/sample.pdf")
 
-upload_chunks(chunks, embeddings)
+query = "what is encoder"
 
-results = fetch_chunks("what is encoder")
+answer = answer_question(query)
 
-for result in results:
-    print("Score:",result.score)
-    print("Chunk id:", result.payload["chunk_index"])
-    print(result.payload["chunk"])
-    print("=" * 50)
+print(answer)
