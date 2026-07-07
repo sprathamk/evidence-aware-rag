@@ -6,4 +6,17 @@ query = "what is encoder"
 
 answer = answer_question(query)
 
-print(answer)
+print(answer["answer"])
+print("\nSources")
+
+sources = answer["sources"]
+
+for source in sources:
+    print(f"Document : {source['document']}")
+    print(f"Page     : {source['page']}")
+    print(f"Chunk ID : {source['chunk']}")
+    print(f"Score    : {source['score']}")
+    print(f"Text     : {source['text'][:97]}...")
+    print("-" * 40)
+
+

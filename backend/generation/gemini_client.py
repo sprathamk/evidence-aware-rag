@@ -9,7 +9,8 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 def generate_response(prompt):
 
     interaction = client.interactions.create(
-        model="gemini-2.5-flash",
+        model="gemini-3.5-flash",
         input=prompt
     )
+
     return interaction.output_text

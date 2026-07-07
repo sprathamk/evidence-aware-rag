@@ -1,17 +1,33 @@
 from typing import List
 
 
-def chunk_text(text: str, chunk_size: int = 500, overlap: int = 100) -> List[str]:
+def chunk_text(pages, chunk_size=500, overlap=100,):
 
     chunks = []
 
-    start = 0
+    chunk_index = 0
 
-    while start < len(text):
-        end = start + chunk_size
+    for page in pages:
 
-        chunks.append(text[start:end])
+        text = page["text"]
 
-        start += chunk_size - overlap
+        start = 0
+
+        while start < len(text):
+
+            end = start + chunk_size
+
+            chunks.append(
+                {
+                    "text": text[start:end],
+                    "page": page["page"],
+                    "document": page["document"],
+                    "chunk_index": chunk_index,
+                }
+            )
+
+            chunk_index += 1
+
+            start += chunk_size - overlap
 
     return chunks

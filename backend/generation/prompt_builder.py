@@ -3,19 +3,36 @@ def build_prompt(chunks, query):
     context = ""
 
     for chunk in chunks:
-        context += f"=== Retrieved Chunk {chunk.payload["chunk_index"]} === \n"
-        context += chunk.payload["chunk"]
-        context += "\n"
-    
-    prompt = f"""You are a research assistant.
-    Use ONLY the retrieved context below.
-    If the answer is not contained in the context,
-    reply: "I couldn't find enough evidence in the retrieved documents."
-    Do not make assumptions.
-    Do not use outside knowledge.Retrieved Context:
-    {context} 
-    Question:{query}
-    Answer:"""
+
+        context += (
+            f"\n=== Retrieved Chunk {chunk.payload['chunk_index']} ===\n"
+            f"Document : {chunk.payload['document']}\n"
+            f"Page     : {chunk.payload['page']}\n\n"
+            f"{chunk.payload['text']}\n\n"
+        )
+
+    prompt = f"""
+You are a research assistant.
+
+Instructions:
+- Answer ONLY using the retrieved context.
+- If the answer is not present, say:
+"I couldn't find enough evidence in the retrieved documents."
+- Do not use outside knowledge.
+
+Retrieved Context
+=================
+
+{context}
+
+Question
+========
+
+{query}
+
+Answer
+======
+"""
 
     # print(prompt)
 

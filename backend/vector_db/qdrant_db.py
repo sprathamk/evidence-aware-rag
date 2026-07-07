@@ -22,8 +22,10 @@ def upload_chunks(chunks, embeddings):
                 id=i,
                 vector=embedding.tolist(),
                 payload={
-                    "chunk": chunk,
-                    "chunk_index": i,
+                    "text": chunk["text"],
+                    "page": chunk["page"],
+                    "document": chunk["document"],
+                    "chunk_index": chunk["chunk_index"],
                 }
             )
         )
